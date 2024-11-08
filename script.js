@@ -1,44 +1,44 @@
-document.addEventListener("DOMContentLoaded", function () {
-    // Typing effect
-    const typeWriter = (text, i, fnCallback) => {
-        if (i < (text.length)) {
-            document.querySelector("#typed-text").innerHTML = text.substring(0, i + 1) + "<span aria-hidden='true'></span>";
-
-            setTimeout(() => {
-                typeWriter(text, i + 1, fnCallback)
-            }, 50);
-        } else if (typeof fnCallback === "function") {
-            setTimeout(fnCallback, 1000);
-        }
-    };
-
-    // Execute typing effect on load
-    window.onload = () => {
-        const text = document.querySelector("#typed-text").getAttribute("data-text");
-        if (text) {
-            typeWriter(text, 0, () => {
-                document.querySelector("#typed-text").innerHTML += "<span class='text-green-400'>|</span>";
+document.addEventListener('DOMContentLoaded', () => {
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
-        }
-    };
-
-    // Section transition animation
-    const sections = document.querySelectorAll("section");
-    sections.forEach((section) => {
-        section.classList.add("section-transition");
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add("active");
-            }
         });
-    }, {
-        threshold: 0.5
     });
 
-    sections.forEach((section) => {
-        observer.observe(section);
+    // Navbar scroll effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 100) {
+            navbar.style.backgroundColor = 'rgba(44, 62, 80, 0.9)';
+        } else {
+            navbar.style.backgroundColor = 'var(--primary-color)';
+        }
+    });
+
+    // Form submission
+    const form = document.getElementById('contact-form');
+    form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Here you would typically send the form data to a server
+        console.log('Form submitted!');
+        alert('Thank you for your message. I will get back to you soon!');
+        form.reset();
+    });
+
+    // Project hover effect
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            card.style.transform = 'translateY(-5px)';
+            card.style.boxShadow = '0 5px 15px rgba(0,0,0,0.2)';
+        });
+        card.addEventListener('mouseleave', () => {
+            card.style.transform = 'translateY(0)';
+            card.style.boxShadow = '0 3px 10px rgba(0,0,0,0.1)';
+        });
     });
 });
